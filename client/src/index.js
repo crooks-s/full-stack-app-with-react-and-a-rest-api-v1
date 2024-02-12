@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import './styles/global.css';
-import './styles/reset.css';
+// import './styles/reset.css';
 
 import App from './App';
 
