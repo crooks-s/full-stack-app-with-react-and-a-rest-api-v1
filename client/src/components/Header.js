@@ -15,7 +15,7 @@ const Header = () => {
           <ul className='header--signedout'>
             {/* Change href's */}
             <li><a href='/'>Sign Up</a></li> 
-            <li><a href='/'>Sign in</a></li>
+            <li><a href='/signin'>Sign in</a></li>
           </ul>
         </nav>
       </div>
