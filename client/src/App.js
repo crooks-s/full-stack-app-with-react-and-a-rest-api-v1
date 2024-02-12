@@ -3,9 +3,11 @@ import { Route, Routes } from 'react-router-dom';
 // Components
 import CourseDetail from './components/CourseDetail';
 import Courses from './components/Courses';
+import CreateCourse from './components/CreateCourse';
 import Header from './components/Header';
 // import Home from './components/Home';
 import NotFound from './components/NotFound';
+import UpdateCourse from './components/UpdateCourse';
 import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
 import UserSignUp from './components/UserSignUp';
@@ -16,8 +18,10 @@ function App() {
     <div>
       <Header />
       <Routes>
-        <Route path="/" element={<Courses />} /> {/* will be able to CREATE and READ at this route */}
-        <Route path="/courses/:id" element={<CourseDetail />} /> {/* will be able to POST and DELETE at this route */}
+        <Route path="/" element={<Courses />} />
+        <Route path="/courses/create" element={<CreateCourse />} />
+        <Route path="/courses/:id/update" element={<UpdateCourse />} />
+        <Route path="/courses/:id" element={<CourseDetail />} />
         <Route path="/signin" element={<UserSignIn />} />
         <Route path="/signup" element={<UserSignUp />} />
         <Route path="/signout" element={<UserSignOut />} />
