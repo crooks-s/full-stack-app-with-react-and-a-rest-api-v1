@@ -19,15 +19,20 @@ function App() {
     <div>
       <Header />
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Courses />} />
         <Route path="courses/:id" element={<CourseDetail />} />
         <Route path="signin" element={<UserSignIn />} />
         <Route path="signup" element={<UserSignUp />} />
         <Route path="signout" element={<UserSignOut />} />
+
+        {/* Private routes */}
         <Route element={<PrivateRoute />}>
           <Route path="courses/create" element={<CreateCourse />} />
           <Route path="courses/:id/update" element={<UpdateCourse />} />
         </Route>
+
+        {/* Catch undefined routes */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
