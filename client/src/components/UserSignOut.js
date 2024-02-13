@@ -8,6 +8,7 @@ const UserSignOut = () => {
   const { actions } = useContext(UserContext);
 
   useEffect(() => actions.signOut());
+  console.log("You're signed out");
 
   return <Navigate to="/" replace />;
 }
