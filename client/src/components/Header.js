@@ -15,14 +15,15 @@ const Header = () => {
             <>
               {/* class should be header--signedin but has a li marker */}
               <ul className='header--signedout'>
+                <span></span>
                 <li><a href='/signout'>Sign Out</a></li>
               </ul>
             </>
             :
             <>
               <ul className='header--signedout'>
-                <li><a href='/signup'>Sign Up</a></li>
-                <li><a href='/signin'>Sign in</a></li>
+                <li><Link to='/signup'>Sign Up</Link></li>
+                <li><Link to='/signin'>Sign in</Link></li>
               </ul>
             </>
           }
