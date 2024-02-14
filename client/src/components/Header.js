@@ -13,9 +13,8 @@ const Header = () => {
         <nav>
           {authUser ?
             <>
-              {/* class should be header--signedin but has a li marker */}
-              <ul className='header--signedout'>
-                <span></span>
+              <ul className='header--signedin'>
+                <li>Welcome {authUser.user.firstName} {authUser.user.lastName}!</li>
                 <li><a href='/signout'>Sign Out</a></li>
               </ul>
             </>
