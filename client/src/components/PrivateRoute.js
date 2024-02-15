@@ -1,10 +1,13 @@
+// Modules
 import { useContext } from "react"
 import { Navigate, Outlet } from 'react-router-dom';
+
+// Context
 import UserContext from "../context/UserContext";
 
 const PrivateRoute = () => {
   const { authUser } = useContext(UserContext);
-
+  
   if (authUser) {
     return <Outlet />
   } else {
