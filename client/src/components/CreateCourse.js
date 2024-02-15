@@ -35,14 +35,14 @@ const CreateCourse = () => {
             <input id="courseTitle" name="courseTitle" type="text" ref={courseTitle} />
             <p>By 'CURRENT USER NAME'</p>
             <label for="courseDescription">Course Description</label>
-            <textarea id="courseDescription" name="courseDescription" />
+            <textarea id="courseDescription" name="courseDescription" style={{ resize: 'none' }} />
           </div>
           <div>
             <label for="estimatedTime">Estimated Time</label>
             <input id="estimatedTime" name="estimatedTime" type="text" ref={estimatedTime} />
 
             <label for="materialsNeeded">Materials Needed</label>
-            <textarea id="materialsNeeded" name="materialsNeeded" />
+            <textarea id="materialsNeeded" name="materialsNeeded" style={{ resize: 'none' }} />
           </div>
         </div>
         <button class="button" type="submit">Create Course</button>
