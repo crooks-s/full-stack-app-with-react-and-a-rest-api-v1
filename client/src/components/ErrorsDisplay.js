@@ -7,7 +7,7 @@ const ErrorsDisplay = ({ errors }) => {
         <h3>Validation Errors</h3> 
         <div>
           <ul>
-            <li>{errors}</li>
+            {errors.map((error, i) => <li key={i}>{error}</li>)}
           </ul>
         </div>
       </div>
