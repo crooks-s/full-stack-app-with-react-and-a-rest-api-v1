@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../context/UserContext";
 
 /*
 Renders the "CREATE COURSE" screen -- 
@@ -9,10 +10,29 @@ Renders the "CREATE COURSE" screen --
 */
 
 const CreateCourse = () => {
-  const navigate = useNavigate();
+  const { authUser } = useContext(UserContext);
   const [errors, setErrors] = useState([]);
+  const [formData, setFormData] = useState({
+    courseTitle: '',
+    courseDescription: '',
+    estimatedTime: '',
+    materialsNeeded: ''
+  });
+
+  const navigate = useNavigate();
   const estimatedTime = useRef(null);
   const courseTitle = useRef(null);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    const updateFormData = {
+      ...formData,
+      [name]: value
+    }
+
+    setFormData(updateFormData);
+  }
 
   const handleCancel = (e) => {
     e.preventDefault();
@@ -32,17 +52,39 @@ const CreateCourse = () => {
         <div className="main--flex">
           <div>
             <label for="courseTitle">Course Title</label>
-            <input id="courseTitle" name="courseTitle" type="text" ref={courseTitle} />
-            <p>By 'CURRENT USER NAME'</p>
+            <input
+              id="courseTitle"
+              name="courseTitle"
+              type="text"
+              onChange={handleChange}
+              ref={courseTitle}
+            />
+            <p>By {authUser.user.firstName} {authUser.user.lastName}</p>
             <label for="courseDescription">Course Description</label>
-            <textarea id="courseDescription" name="courseDescription" style={{ resize: 'none' }} />
+            <textarea
+              id="courseDescription"
+              name="courseDescription"
+              onChange={handleChange}
+              style={{ resize: 'none' }}
+            />
           </div>
           <div>
             <label for="estimatedTime">Estimated Time</label>
-            <input id="estimatedTime" name="estimatedTime" type="text" ref={estimatedTime} />
+            <input
+              id="estimatedTime"
+              name="estimatedTime"
+              type="text"
+              onChange={handleChange}
+              ref={estimatedTime}
+            />
 
             <label for="materialsNeeded">Materials Needed</label>
-            <textarea id="materialsNeeded" name="materialsNeeded" style={{ resize: 'none' }} />
+            <textarea
+              id="materialsNeeded"
+              name="materialsNeeded"
+              onChange={handleChange}
+              style={{ resize: 'none' }}
+            />
           </div>
         </div>
         <button class="button" type="submit">Create Course</button>
