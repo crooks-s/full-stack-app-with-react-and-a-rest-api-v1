@@ -60,7 +60,7 @@ const CourseDetail = () => {
         navigate('/');
       } else if (response.status === 401) {
         const data = await response.json();
-        setErrors(data.message);
+        setErrors([data.message]);
       } else {
         throw new Error();
       }
