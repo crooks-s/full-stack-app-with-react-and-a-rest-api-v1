@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import UserContext from "../context/UserContext";
 
 
 /*
@@ -10,13 +11,52 @@ Renders the "SIGN UP" screen --
 */
 
 const UserSignUp = () => {
+  const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
   const firstName = useRef(null);
   const lastName = useRef(null);
   const emailAddress = useRef(null);
   const password = useRef(null);
+  const { actions } = useContext(UserContext);
 
   // handle submit
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const newUser = {
+      firstName: firstName.current.value,
+      lastName: lastName.current.value,
+      emailAddress: emailAddress.current.value,
+      password: password.current.value
+    }
+
+    const fetchOptions = {
+      method: 'POST',
+      body: JSON.stringify(newUser),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      }
+    }
+
+    try {
+      const response = await fetch(
+        'http://localhost:5000/api/users',
+        fetchOptions
+      );
+      if (response.status === 201) {
+        await actions.signIn(newUser);
+        navigate('/');
+      } else if (response.status === 400) {
+        const data = await response.json();
+        setErrors(data.errors);
+        console.log(errors);
+        //will use errors to render validation to DOM
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   // cancel 
   const handleCancel = (e) => {
@@ -27,29 +67,29 @@ const UserSignUp = () => {
   return (
     <div className="form--center">
       <h2>Sign Up</h2>
-      <form>
-        <label for="firstName">First Name</label>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="firstName">First Name</label>
         <input
           id="firstName"
           name="firstName"
           type="text"
           ref={firstName}
         />
-        <label for="lastName">Last Name</label>
+        <label htmlFor="lastName">Last Name</label>
         <input
           id="lastName"
           name="lastName"
           type="text"
           ref={lastName}
         />
-        <label for="emailAddress">Email Address</label>
+        <label htmlFor="emailAddress">Email Address</label>
         <input
           id="emailAddress"
           name="emailAddress"
           type="email"
           ref={emailAddress}
         />
-        <label for="password">Password</label>
+        <label htmlFor="password">Password</label>
         <input
           id="password"
           name="password"
