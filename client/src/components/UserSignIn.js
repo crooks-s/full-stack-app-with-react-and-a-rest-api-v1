@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import UserContext from "../context/UserContext";
 
@@ -59,6 +59,7 @@ const UserSignIn = () => {
         <button className='button' type="submit">Sign In</button>
         <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
       </form>
+      <p>Don't have a user account? Click here to <Link to="/signup">sign up</Link>!</p>
     </div>
   );
 }
