@@ -15,7 +15,7 @@ const UpdateCourse = () => {
   const estimatedTime = useRef(null);
   const courseDescription = useRef(null);
   const materialsNeeded = useRef(null);
-  
+
   const navigate = useNavigate();
 
   // will use param to redirect to its course detail page
@@ -60,16 +60,40 @@ const UpdateCourse = () => {
           <div className="main--flex">
             <div>
               <label for="courseTitle">Course Title</label>
-              <input id="courseTitle" name="courseTitle" type="text" ref={courseTitle} defaultValue={course.title} />
+              <input
+                id="courseTitle"
+                name="courseTitle"
+                type="text"
+                ref={courseTitle}
+                defaultValue={course.title}
+              />
               <p>By {course.User && `${course.User.firstName} ${course.User.lastName}`}</p>
               <label for="courseDescription">Course Description</label>
-              <textarea id="courseDescription" name="courseDescription" ref={courseDescription} defaultValue={course.description} style={{ resize: 'none' }} />
+              <textarea
+                id="courseDescription"
+                name="courseDescription"
+                ref={courseDescription}
+                defaultValue={course.description}
+                style={{ resize: 'none' }}
+              />
             </div>
             <div>
               <label for="estimatedTime">Estimated Time</label>
-              <input id="estimatedTime" name="estimatedTime" type="text" ref={estimatedTime} defaultValue={course.estimatedTime}/>
+              <input
+                id="estimatedTime"
+                name="estimatedTime"
+                type="text"
+                ref={estimatedTime}
+                defaultValue={course.estimatedTime}
+              />
               <label for="materialsNeeded">Materials Needed</label>
-              <textarea id="materialsNeeded" name="materialsNeeded" useRef={materialsNeeded} defaultValue={course.materialsNeeded} style={{ resize: 'none' }} />
+              <textarea
+                id="materialsNeeded"
+                name="materialsNeeded"
+                useRef={materialsNeeded}
+                defaultValue={course.materialsNeeded}
+                style={{ resize: 'none' }}
+              />
             </div>
           </div>
           <button className="button" type="submit">Update Button</button>
