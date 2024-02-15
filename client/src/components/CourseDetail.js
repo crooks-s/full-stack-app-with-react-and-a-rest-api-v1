@@ -3,13 +3,6 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import UserContext from "../context/UserContext";
 
-/*
-Renders the "Course Detail" screen -- 
-  1. get course details from API's "/api/courses/:id" route and render the course
-  2. render DELETE COURSE button -- send delete request to API's "/api/courses/:id"
-  3. render UPDATE COURSE button -- navigate to "UPDATE COURSE" screen
-*/
-
 const CourseDetail = () => {
   const [course, setCourse] = useState([]);
   const { id } = useParams();
@@ -25,7 +18,10 @@ const CourseDetail = () => {
 
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/courses/${id}`, fetchOptions);
+        const response = await fetch(
+          `http://localhost:5000/api/courses/${id}`,
+          fetchOptions
+        );
 
         if (response.status === 200) {
           const data = await response.json();
@@ -52,13 +48,14 @@ const CourseDetail = () => {
     }
 
     try {
-      console.log(encodedCredentials);
-      const response = await fetch(`http://localhost:5000/api/courses/${id}`, fetchOptions);
+      const response = await fetch(
+        `http://localhost:5000/api/courses/${id}`,
+        fetchOptions
+      );
       if (response.status === 204) {
-        console.log('course was deleted');
         navigate('/');
       } else if (response.status === 401) {
-        console.log('not authorized at course id: ', id);
+        // set error state to show not authorized
       } else {
         console.log('failed to delete: ', response.statusText);
       }
@@ -72,7 +69,6 @@ const CourseDetail = () => {
       {/* Display Update and Delete buttons only if user is logged in */}
       {authUser ? (
         <div className="actions--bar">
-          {/* will need to fix the update and delete Link to routes */}
           <Link to={`update`} className="button">Update Course</Link>
           <button className="button" onClick={handleDelete}>Delete Course</button>
           <Link to='/' className="button button-secondary">Return to List</Link>
