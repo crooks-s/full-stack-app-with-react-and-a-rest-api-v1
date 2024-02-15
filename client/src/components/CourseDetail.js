@@ -16,6 +16,7 @@ const CourseDetail = () => {
   const { authUser } = useContext(UserContext);
   const navigate = useNavigate();
 
+  // fetch course on id
   useEffect(() => {
     const fetchOptions = {
       method: 'GET',
@@ -37,17 +38,11 @@ const CourseDetail = () => {
     }
 
     fetchData();
-  }, []);
+  }, [id]);
 
+  // delete course
   const handleDelete = async () => {
-
-    // not necessary but implemented for testing
-    const credentials = {
-      username: authUser.user.emailAddress,
-      password: authUser.user.password
-    }
-
-    const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
+    const encodedCredentials = btoa(`${authUser.user.emailAddress}:${authUser.user.password}`);
 
     const fetchOptions = {
       method: 'DELETE',
