@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useContext } from "react";
+import UserContext from "../context/UserContext";
 
 /*
 Renders the "Course Detail" screen -- 
@@ -11,6 +13,7 @@ Renders the "Course Detail" screen --
 const CourseDetail = () => {
   const [course, setCourse] = useState([]);
   const { id } = useParams();
+  const { authUser } = useContext(UserContext);
 
   useEffect(() => {
     const fetchOptions = {
@@ -30,7 +33,6 @@ const CourseDetail = () => {
       } catch (error) {
         console.log('Error: ', error.message);
       }
-
     }
 
     fetchData();
@@ -38,12 +40,18 @@ const CourseDetail = () => {
 
   return (
     <>
-      <div className="actions--bar">
-        {/* will need to fix the update and delete Link to routes */}
-        <Link to={`update`} className="button">Update Course</Link>
-        <Link to='delete' className="button">Delete Course</Link>
-        <Link to='/' className="button button-secondary">Return to List</Link>
-      </div>
+      {/* Display Update and Delete buttons only if user is logged in */}
+      {authUser ? (
+        <div className="actions--bar">
+          {/* will need to fix the update and delete Link to routes */}
+          <Link to={`update`} className="button">Update Course</Link>
+          <Link to='delete' className="button">Delete Course</Link>
+          <Link to='/' className="button button-secondary">Return to List</Link>
+        </div>
+        ) : (
+          null
+        )}
+
       <div className="wrap">
         <h2>Course Detail</h2>
         <form>
