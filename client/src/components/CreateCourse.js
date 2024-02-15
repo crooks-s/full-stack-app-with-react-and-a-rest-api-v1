@@ -1,39 +1,35 @@
+// Modules
 import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
+// Context
 import UserContext from "../context/UserContext";
 
-/*
-Renders the "CREATE COURSE" screen -- 
-  1. render a FORM that allows user to create a new course
-  2. render create course button - sends POST req to /api/courses onClick
-  3. render cancel button that returns user to default route
-*/
+// Component
+import ErrorsDisplay from "./ErrorsDisplay";
 
 const CreateCourse = () => {
+  // React Hooks
   const { authUser } = useContext(UserContext);
   const [errors, setErrors] = useState([]);
-
   const navigate = useNavigate();
-
+  // React Refs
   const title = useRef(null);
   const description = useRef(null);
   const estimatedTime = useRef(null);
   const materialsNeeded = useRef(null);
 
-  // handle submit to create course using post method
+  // Create a new course
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const newCourse = {
       title: title.current.value,
       description: description.current.value,
       estimatedTime: estimatedTime.current.value,
       materialsNeeded: materialsNeeded.current.value,
       userId: authUser.user.id
-    }
-
+    };
     const encodedCredentials = btoa(`${authUser.user.emailAddress}:${authUser.user.password}`);
-
     const fetchOptions = {
       method: 'POST',
       body: JSON.stringify(newCourse),
@@ -41,8 +37,7 @@ const CreateCourse = () => {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Basic ${encodedCredentials}`
       }
-    }
-
+    };
     try {
       if (authUser) {
         const response = await fetch(
@@ -54,16 +49,14 @@ const CreateCourse = () => {
         } else if (response.status === 400) {
           const data = await response.json();
           setErrors(data.errors);
-          // will use errors state to render to DOM
-          console.log(errors);
         } else {
           throw new Error();
         }
       }
     } catch (error) {
       console.log(error);
-    }
-  }
+    };
+  };
 
   const handleCancel = (e) => {
     e.preventDefault();
@@ -72,13 +65,8 @@ const CreateCourse = () => {
 
   return (
     <div className="wrap">
+      <ErrorsDisplay errors={errors.map(error => error.msg)} />
       <h2>Create Course</h2>
-      {/* <div className="validation--errors">
-        <h3>Validation Errors</h3>
-        <ul>
-          <li>Render the errors here. will need to use error STATE which is an array of errors. Map the errors to the li elements</li>
-        </ul>
-      </div> */}
       <form onSubmit={handleSubmit}>
         <div className="main--flex">
           <div>
