@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import UserContext from "../context/UserContext";
 
@@ -14,6 +14,7 @@ const CourseDetail = () => {
   const [course, setCourse] = useState([]);
   const { id } = useParams();
   const { authUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOptions = {
@@ -38,8 +39,22 @@ const CourseDetail = () => {
     fetchData();
   }, []);
 
-  const handleDelete = () => {
-    
+  const handleDelete = async () => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {}
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/courses/${id}`, fetchOptions);
+
+      if (response.status === 200) {
+        console.log('course was deleted');
+        navigate('/');
+      }
+    } catch (error) {
+      console.log('Error: ', error.message);
+    }
   }
 
   return (
@@ -49,7 +64,7 @@ const CourseDetail = () => {
         <div className="actions--bar">
           {/* will need to fix the update and delete Link to routes */}
           <Link to={`update`} className="button">Update Course</Link>
-          <Link to='delete' className="button">Delete Course</Link>
+          <button className="button" onClick={handleDelete}>Delete Course</button>
           <Link to='/' className="button button-secondary">Return to List</Link>
         </div>
         ) : (
@@ -62,10 +77,10 @@ const CourseDetail = () => {
           <div className="main--flex">
             <div>
               <h3 className="course--detail--title">Course</h3>
-              <h4 class="course--name">{course.title}</h4>
+              <h4 className="course--name">{course.title}</h4>
               <p>By {course.User && `${course.User.firstName} ${course.User.lastName}`}</p>
-              <p>{course.description && course.description.split('\n\n').map((paragraph, index) =>
-                <p key={index}>{paragraph}</p>)}</p>
+              {course.description && course.description.split('\n\n').map((paragraph, index) =>
+                <p key={index}>{paragraph}</p>)}
             </div>
             <div>
               <h3 className="course--detail--title">Estimated Time</h3>
