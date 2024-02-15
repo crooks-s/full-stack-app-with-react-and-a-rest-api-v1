@@ -43,9 +43,19 @@ const UserSignUp = () => {
           ref={lastName}
         />
         <label for="emailAddress">Email Address</label>
-        <input id="emailAddress" name="emailAddress" type="email" ref={emailAddress} />
+        <input
+          id="emailAddress"
+          name="emailAddress"
+          type="email"
+          ref={emailAddress}
+        />
         <label for="password">Password</label>
-        <input id="password" name="password" type="password" ref={password} />
+        <input
+          id="password"
+          name="password"
+          type="password"
+          ref={password}
+        />
         <button className="button" type="submit">Sign Up</button>
         <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
       </form>
