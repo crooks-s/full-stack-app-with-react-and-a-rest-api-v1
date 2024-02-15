@@ -1,6 +1,12 @@
+// Modules
 import { useEffect, useState, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import Markdown from 'react-markdown';
+
+// Context
 import UserContext from "../context/UserContext";
+
+// Component
 import ErrorsDisplay from "./ErrorsDisplay";
 
 const CourseDetail = () => {
@@ -89,18 +95,17 @@ const CourseDetail = () => {
             <div>
               <h3 className="course--detail--title">Course</h3>
               <h4 className="course--name">{course.title}</h4>
-              <p>By {course.User && `${course.User.firstName} ${course.User.lastName}`}</p>
-              {course.description && course.description.split('\n\n').map((paragraph, index) =>
-                <p key={index}>{paragraph}</p>)}
+              <p>
+                By {course.User && `${course.User.firstName} ${course.User.lastName}`}
+              </p>
+              <Markdown>{course.description}</Markdown>
             </div>
             <div>
               <h3 className="course--detail--title">Estimated Time</h3>
               <p>{course.estimatedTime}</p>
               <h3 className="course--detail--title">Materials Needed</h3>
               <ul className="course--detail--list">
-                {course.materialsNeeded && course.materialsNeeded.substring(1).split('*').map((material, index) => (
-                  <li key={index}>{material}</li>
-                ))}
+                <Markdown>{course.materialsNeeded}</Markdown>
               </ul>
             </div>
           </div>
