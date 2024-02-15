@@ -2,51 +2,48 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import UserContext from "../context/UserContext";
+import ErrorsDisplay from "./ErrorsDisplay";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState([]);
+  const [errors, setErrors] = useState([]);
   const { id } = useParams();
   const { authUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  // fetch course on id
   useEffect(() => {
     const fetchOptions = {
       method: 'GET',
       headers: {}
     }
-
     const fetchData = async () => {
       try {
         const response = await fetch(
           `http://localhost:5000/api/courses/${id}`,
           fetchOptions
         );
-
         if (response.status === 200) {
           const data = await response.json();
           setCourse(data);
         }
-
       } catch (error) {
         console.log('Error: ', error.message);
       }
     }
-
     fetchData();
   }, [id]);
 
   // delete course
   const handleDelete = async () => {
-    const encodedCredentials = btoa(`${authUser.user.emailAddress}:${authUser.user.password}`);
-
+    const encodedCredentials = btoa(
+      `${authUser.user.emailAddress}:${authUser.user.password}`
+    );
     const fetchOptions = {
       method: 'DELETE',
       headers: {
         Authorization: `Basic ${encodedCredentials}`
       }
     }
-
     try {
       const response = await fetch(
         `http://localhost:5000/api/courses/${id}`,
@@ -55,9 +52,10 @@ const CourseDetail = () => {
       if (response.status === 204) {
         navigate('/');
       } else if (response.status === 401) {
-        // set error state to show not authorized
+        const data = await response.json();
+        setErrors(data.message);
       } else {
-        console.log('failed to delete: ', response.statusText);
+        throw new Error();
       }
     } catch (error) {
       console.log('Error: ', error.message);
@@ -76,8 +74,8 @@ const CourseDetail = () => {
       ) : (
         null
       )}
-
       <div className="wrap">
+        <ErrorsDisplay errors={errors} />
         <h2>Course Detail</h2>
         <form>
           <div className="main--flex">
