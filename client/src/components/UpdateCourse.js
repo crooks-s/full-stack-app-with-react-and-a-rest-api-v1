@@ -54,11 +54,6 @@ const UpdateCourse = () => {
 
   return (
     <>
-      <div className="actions--bar">
-        {/* will need to fix the update and delete Link to routes */}
-        <Link to='delete' className="button">Delete Course</Link>
-        <Link to='/' className="button button-secondary">Return to List</Link>
-      </div>
       <div className="wrap">
         <h2>Update Course</h2>
         <form>
