@@ -68,10 +68,10 @@ router.post('/courses', authenticateUser, [
 
         await course.save();
         res.status(201).location(`/courses/${course.id}`).end();
-      }  catch (error) {
+      } catch (error) {
         if (error.name === "SequelizeValidationError" || error.name === "SequelizeUniqueConstraintError") {
           const errors = error.errors.map(err => err.message);
-          res.status(400).json({ errors });   
+          res.status(400).json({ errors });
         } else {
           throw error; //error caught in the asyncHandler's catch block
         }
@@ -133,9 +133,17 @@ router.put('/courses/:id', authenticateUser, [
 /* DELETE a course */
 router.delete('/courses/:id', authenticateUser, asyncHandler(async (req, res) => {
   const course = await Course.findByPk(req.params.id);
-  if (course) {
+  const courseOwner = await User.findByPk(course.userId);
+  // Validate if the current user owns the course to be deleted
+  const isCourseOwner = (
+    courseOwner.emailAddress === req.currentUser.emailAddress
+    && courseOwner.password === req.currentUser.password
+  );
+  if (course && isCourseOwner) {
     await course.destroy();
     res.status(204).end();
+  } else if (!isCourseOwner) {
+    res.status(401).json({ message: 'You are not the owner of the course. Unauthorized to remove course.'});
   } else {
     res.status(404).json({ message: 'Course not found' });
   }
