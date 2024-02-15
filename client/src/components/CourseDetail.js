@@ -40,17 +40,32 @@ const CourseDetail = () => {
   }, []);
 
   const handleDelete = async () => {
+
+    // not necessary but implemented for testing
+    const credentials = {
+      username: authUser.user.emailAddress,
+      password: authUser.user.password
+    }
+
+    const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
+
     const fetchOptions = {
       method: 'DELETE',
-      headers: {}
+      headers: {
+        Authorization: `Basic ${encodedCredentials}`
+      }
     }
 
     try {
+      console.log(encodedCredentials);
       const response = await fetch(`http://localhost:5000/api/courses/${id}`, fetchOptions);
-
-      if (response.status === 200) {
+      if (response.status === 204) {
         console.log('course was deleted');
         navigate('/');
+      } else if (response.status === 401) {
+        console.log('not authorized at course id: ', id);
+      } else {
+        console.log('failed to delete: ', response.statusText);
       }
     } catch (error) {
       console.log('Error: ', error.message);
@@ -67,9 +82,9 @@ const CourseDetail = () => {
           <button className="button" onClick={handleDelete}>Delete Course</button>
           <Link to='/' className="button button-secondary">Return to List</Link>
         </div>
-        ) : (
-          null
-        )}
+      ) : (
+        null
+      )}
 
       <div className="wrap">
         <h2>Course Detail</h2>
@@ -97,8 +112,6 @@ const CourseDetail = () => {
       </div>
     </>
   );
-
-
 }
 
 export default CourseDetail;
