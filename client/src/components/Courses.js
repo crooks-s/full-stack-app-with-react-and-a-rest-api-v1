@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 
 const Courses = () => {
+  // React Hook
   const [courses, setCourses] = useState([]);
 
-  // Display all courses on first render
+  // Retrieve all courses to display on first render
   useEffect(() => {
     const fetchOptions = {
       method: 'GET',
       headers: {}
-    }
+    };
     const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:5000/api/courses', fetchOptions);
@@ -20,7 +21,7 @@ const Courses = () => {
       } catch (error) {
         console.log("Error: ", error);
       }
-    }
+    };
     fetchData();
   }, []);
 
