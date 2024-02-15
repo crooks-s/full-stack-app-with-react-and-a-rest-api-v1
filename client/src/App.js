@@ -32,7 +32,7 @@ function App() {
           <Route path="courses/:id/update" element={<UpdateCourse />} />
         </Route>
 
-        {/* Catch undefined routes */}
+        {/* Catch undefined routes to render 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
