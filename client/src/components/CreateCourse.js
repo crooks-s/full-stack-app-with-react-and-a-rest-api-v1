@@ -12,28 +12,57 @@ Renders the "CREATE COURSE" screen --
 const CreateCourse = () => {
   const { authUser } = useContext(UserContext);
   const [errors, setErrors] = useState([]);
-  const [formData, setFormData] = useState({
-    courseTitle: '',
-    courseDescription: '',
-    estimatedTime: '',
-    materialsNeeded: ''
-  });
 
   const navigate = useNavigate();
+
+  const title = useRef(null);
+  const description = useRef(null);
   const estimatedTime = useRef(null);
-  const courseTitle = useRef(null);
+  const materialsNeeded = useRef(null);
 
   // handle submit to create course using post method
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    const updateFormData = {
-      ...formData,
-      [name]: value
+    const newCourse = {
+      title: title.current.value,
+      description: description.current.value,
+      estimatedTime: estimatedTime.current.value,
+      materialsNeeded: materialsNeeded.current.value,
+      userId: authUser.user.id
     }
 
-    setFormData(updateFormData);
+    const encodedCredentials = btoa(`${authUser.user.emailAddress}:${authUser.user.password}`);
+
+    const fetchOptions = {
+      method: 'POST',
+      body: JSON.stringify(newCourse),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Basic ${encodedCredentials}`
+      }
+    }
+
+    try {
+      if (authUser) {
+        const response = await fetch(
+          'http://localhost:5000/api/courses',
+          fetchOptions
+        );
+        if (response.status === 201) {
+          navigate('/');
+        } else if (response.status === 400) {
+          const data = await response.json();
+          setErrors(data.errors);
+          // will use errors state to render to DOM
+          console.log(errors);
+        } else {
+          throw new Error();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const handleCancel = (e) => {
@@ -50,23 +79,22 @@ const CreateCourse = () => {
           <li>Render the errors here. will need to use error STATE which is an array of errors. Map the errors to the li elements</li>
         </ul>
       </div> */}
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="main--flex">
           <div>
-            <label htmlFor="courseTitle">Course Title</label>
+            <label htmlFor="title">Course Title</label>
             <input
               id="courseTitle"
               name="courseTitle"
               type="text"
-              onChange={handleChange}
-              ref={courseTitle}
+              ref={title}
             />
             <p>By {authUser.user.firstName} {authUser.user.lastName}</p>
             <label htmlFor="courseDescription">Course Description</label>
             <textarea
               id="courseDescription"
               name="courseDescription"
-              onChange={handleChange}
+              ref={description}
               style={{ resize: 'none' }}
             />
           </div>
@@ -76,7 +104,6 @@ const CreateCourse = () => {
               id="estimatedTime"
               name="estimatedTime"
               type="text"
-              onChange={handleChange}
               ref={estimatedTime}
             />
 
@@ -84,13 +111,13 @@ const CreateCourse = () => {
             <textarea
               id="materialsNeeded"
               name="materialsNeeded"
-              onChange={handleChange}
+              ref={materialsNeeded}
               style={{ resize: 'none' }}
             />
           </div>
         </div>
-        <button class="button" type="submit">Create Course</button>
-        <button class="button button-secondary" onClick={handleCancel}>Cancel</button>
+        <button className="button" type="submit">Create Course</button>
+        <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
       </form>
     </div>
   );
