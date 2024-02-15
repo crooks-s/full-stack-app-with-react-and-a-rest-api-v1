@@ -38,6 +38,10 @@ const CourseDetail = () => {
     fetchData();
   }, []);
 
+  const handleDelete = () => {
+    
+  }
+
   return (
     <>
       {/* Display Update and Delete buttons only if user is logged in */}

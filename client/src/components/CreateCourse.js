@@ -23,6 +23,8 @@ const CreateCourse = () => {
   const estimatedTime = useRef(null);
   const courseTitle = useRef(null);
 
+  // handle submit to create course using post method
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
