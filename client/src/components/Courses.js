@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 const Courses = () => {
   const [courses, setCourses] = useState([]);
 
+  // Display all courses on first render
   useEffect(() => {
     const fetchOptions = {
       method: 'GET',
       headers: {}
     }
-    
     const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:5000/api/courses', fetchOptions);
@@ -17,23 +17,32 @@ const Courses = () => {
           const data = await response.json();
           setCourses(data);
         }
-      } catch (err) {
-        console.log('Error: ', err.message);
+      } catch (error) {
+        console.log("Error: ", error);
       }
     }
-
     fetchData();
   }, []);
 
   return (
     <div className="wrap main--grid">
+      {/* Map the courses state/array to render each course as a Link */}
       {courses.map(course => (
-        <Link className='course--module course--link' key={course.id} to={`/courses/${course.id}`}>
+        <Link
+          to={`/courses/${course.id}`}
+          className='course--module course--link'
+          key={course.id}
+        >
           <h2 className="course--label">Course</h2>
           <h3 className="course--title">{course.title}</h3>
         </Link>
       ))}
-      <Link className="course--module course--add--module" to="/courses/create">
+    
+      {/* Link to create a new course */}
+      <Link
+        to="/courses/create"
+        className="course--module course--add--module"
+      >
         <span className="course--add--title">
           <svg
             version="1.1"
