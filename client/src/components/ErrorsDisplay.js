@@ -1,7 +1,7 @@
 const ErrorsDisplay = ({ errors }) => {
   let errorsDisplay = null;
 
-  if (errors) {
+  if (errors.length) {
     errorsDisplay = (
       <div className="validation--errors">
         <h3>Validation Errors</h3> 
