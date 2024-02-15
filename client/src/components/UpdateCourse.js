@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 /*
 Renders the "UPDATE COURSE" screen -- 
@@ -16,9 +15,19 @@ const UpdateCourse = () => {
   const estimatedTime = useRef(null);
   const courseDescription = useRef(null);
   const materialsNeeded = useRef(null);
+  
+  const navigate = useNavigate();
 
   // will use param to redirect to its course detail page
   const { id } = useParams();
+
+  // handleSubmit
+
+  // cancel button
+  const handleCancel = (e) => {
+    e.preventDefault();
+    navigate('/');
+  }
 
   useEffect(() => {
     const fetchOptions = {
@@ -59,15 +68,17 @@ const UpdateCourse = () => {
               <input id="courseTitle" name="courseTitle" type="text" ref={courseTitle} defaultValue={course.title} />
               <p>By {course.User && `${course.User.firstName} ${course.User.lastName}`}</p>
               <label for="courseDescription">Course Description</label>
-              <textarea id="courseDescription" name="courseDescription" ref={courseDescription} defaultValue={course.description} />
+              <textarea id="courseDescription" name="courseDescription" ref={courseDescription} defaultValue={course.description} style={{ resize: 'none' }} />
             </div>
             <div>
               <label for="estimatedTime">Estimated Time</label>
               <input id="estimatedTime" name="estimatedTime" type="text" ref={estimatedTime} defaultValue={course.estimatedTime}/>
               <label for="materialsNeeded">Materials Needed</label>
-              <textarea id="materialsNeeded" name="materialsNeeded" useRef={materialsNeeded} defaultValue={course.materialsNeeded} />
+              <textarea id="materialsNeeded" name="materialsNeeded" useRef={materialsNeeded} defaultValue={course.materialsNeeded} style={{ resize: 'none' }} />
             </div>
           </div>
+          <button className="button" type="submit">Update Button</button>
+          <button class="button button-secondary" onClick={handleCancel}>Cancel</button>
         </form>
       </div>
     </>
