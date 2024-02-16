@@ -12,7 +12,7 @@ This must be done in both ```api/``` and ```client/``` unfortunately.
 Runs the app in the development mode.\
 Again, this needs to be done in both ```api/``` and ```client/```. \
 Open [http://localhost:3000](http://localhost:3000) to view the client in your browser. \
-The server will be hosted on [http://localhost:5000](http://localhost:5000) \
+The server will be hosted on [http://localhost:5000](http://localhost:5000). 
 
 
 ## Introduction
