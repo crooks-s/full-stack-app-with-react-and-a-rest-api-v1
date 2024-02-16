@@ -14,7 +14,7 @@ const UserSignIn = () => {
   const emailAddress = useRef(null);
   const password = useRef(null);
 
-  // Sign in using user's entered credentials
+  // Handle form submission to Sign in with user's entered credentials
   const handleSubmit = async (event) => {
     event.preventDefault();
     const credentials = {

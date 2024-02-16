@@ -20,7 +20,7 @@ const CreateCourse = () => {
   const estimatedTime = useRef(null);
   const materialsNeeded = useRef(null);
 
-  // Create a new course
+  // Handle form submission to Create a new course
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newCourse = {
