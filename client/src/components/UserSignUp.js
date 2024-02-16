@@ -1,6 +1,7 @@
 // Modules
 import { useState, useRef, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { api } from "../utils/apiHelper";
 // Context
 import UserContext from "../context/UserContext";
 // Component
@@ -17,7 +18,7 @@ const UserSignUp = () => {
   const emailAddress = useRef(null);
   const password = useRef(null);
 
-  // Create a new User
+  // Handle form submission to Create a new User
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newUser = {
@@ -26,18 +27,8 @@ const UserSignUp = () => {
       emailAddress: emailAddress.current.value,
       password: password.current.value
     };
-    const fetchOptions = {
-      method: 'POST',
-      body: JSON.stringify(newUser),
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      }
-    };
     try {
-      const response = await fetch(
-        'http://localhost:5000/api/users',
-        fetchOptions
-      );
+      const response = await api('/users', "POST", newUser, null);
       if (response.status === 201) {
         await actions.signIn(newUser);
         navigate('/');
