@@ -92,7 +92,9 @@ const UserSignUp = () => {
         <button className="button" type="submit">Sign Up</button>
         <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
       </form>
-      <p>Already have a user account? Click here to <Link to="/signin">sign in</Link>!</p>
+      <p>Already have a user account? Click here to
+        <Link to="/signin"> sign in</Link>!
+      </p>
     </div>
   );
 }
