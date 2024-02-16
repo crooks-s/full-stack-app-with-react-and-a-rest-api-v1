@@ -6,6 +6,7 @@ import { api } from "../utils/apiHelper";
 import UserContext from "../context/UserContext";
 // Component
 import ErrorsDisplay from './ErrorsDisplay';
+import CancelButton from "./CancelButton";
 
 const UserSignUp = () => {
   // React Hooks
@@ -39,12 +40,6 @@ const UserSignUp = () => {
     } catch (error) {
       console.log('Error: ', error.message);
     }
-  };
-
-  // For Cancel button 
-  const handleCancel = (e) => {
-    e.preventDefault();
-    navigate('/');
   };
 
   return (
@@ -81,7 +76,7 @@ const UserSignUp = () => {
           ref={password}
         />
         <button className="button" type="submit">Sign Up</button>
-        <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+        <CancelButton />
       </form>
       <p>Already have a user account? Click here to
         <Link to="/signin"> sign in</Link>!

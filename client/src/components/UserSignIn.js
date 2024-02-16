@@ -4,6 +4,8 @@ import { useNavigate, Link } from "react-router-dom";
 // Context
 import UserContext from "../context/UserContext";
 import ErrorsDisplay from "./ErrorsDisplay";
+// Component
+import CancelButton from "./CancelButton";
 
 const UserSignIn = () => {
   // React Hooks
@@ -61,7 +63,7 @@ const UserSignIn = () => {
           placeholder="8-20 characters"
         />
         <button className='button' type="submit">Sign In</button>
-        <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+        <CancelButton />
       </form>
       <p>Don't have a user account? Click here to
         <Link to="/signup"> sign up</Link>!

@@ -6,6 +6,7 @@ import { api } from "../utils/apiHelper";
 import UserContext from "../context/UserContext";
 // Component
 import ErrorsDisplay from "./ErrorsDisplay";
+import CancelButton from "./CancelButton";
 
 const UpdateCourse = () => {
   // React Hooks
@@ -74,12 +75,6 @@ const UpdateCourse = () => {
     };
   };
 
-  // For Cancel button
-  const handleCancel = (e) => {
-    e.preventDefault();
-    navigate('/');
-  };
-
   return (
     <>
       <ErrorsDisplay errors={errors} />
@@ -128,7 +123,7 @@ const UpdateCourse = () => {
             </div>
           </div>
           <button className="button" type="submit">Update Button</button>
-          <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+          <CancelButton />
         </form>
       </div>
     </>
