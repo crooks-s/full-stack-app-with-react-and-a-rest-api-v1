@@ -37,7 +37,7 @@ const UpdateCourse = () => {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, navigate]);
 
   // Handles form submission to Update Course
   const handleSubmit = async (event) => {
