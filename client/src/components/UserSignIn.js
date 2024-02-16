@@ -1,18 +1,20 @@
 // Modules
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 // Context
 import UserContext from "../context/UserContext";
+import ErrorsDisplay from "./ErrorsDisplay";
 
 const UserSignIn = () => {
   // React Hooks
   const navigate = useNavigate();
   const { actions } = useContext(UserContext);
+  const [errors, setErrors] = useState([]);
   // React Refs
   const emailAddress = useRef(null);
   const password = useRef(null);
 
-  // Create new user and sign in
+  // Sign in using user's entered credentials
   const handleSubmit = async (event) => {
     event.preventDefault();
     const credentials = {
@@ -21,8 +23,10 @@ const UserSignIn = () => {
     };
     try {
       const user = await actions.signIn(credentials);
-      navigate('/');
       if (user) {
+        navigate('/');
+      } else if (user === null) {
+        setErrors(['Not authorized. Invalid credentials.']);
       }
     } catch (error) {
       console.log('Error: ', error.message);
@@ -33,10 +37,11 @@ const UserSignIn = () => {
   const handleCancel = (e) => {
     e.preventDefault();
     navigate('/');
-  }
+  };
 
   return (
     <div className="form--centered">
+      <ErrorsDisplay errors={errors} />
       <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="emailAddress">Email Address</label>
@@ -59,7 +64,7 @@ const UserSignIn = () => {
         <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
       </form>
       <p>Don't have a user account? Click here to
-        <Link to="/signup">sign up</Link>!
+        <Link to="/signup"> sign up</Link>!
       </p>
     </div>
   );
