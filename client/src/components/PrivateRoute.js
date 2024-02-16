@@ -1,17 +1,18 @@
 // Modules
 import { useContext } from "react"
-import { Navigate, Outlet } from 'react-router-dom';
-
+import { Outlet } from 'react-router-dom';
 // Context
 import UserContext from "../context/UserContext";
+// Component
+import Forbidden from "./Forbidden";
 
 const PrivateRoute = () => {
   const { authUser } = useContext(UserContext);
-  
+
   if (authUser) {
     return <Outlet />
   } else {
-    return <Navigate to='/signin' />
+    return <Forbidden />
   }
 }
 
