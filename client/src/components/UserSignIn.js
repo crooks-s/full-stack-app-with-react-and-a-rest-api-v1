@@ -29,6 +29,7 @@ const UserSignIn = () => {
     }
   };
 
+  // For Cancel button
   const handleCancel = (e) => {
     e.preventDefault();
     navigate('/');
@@ -57,7 +58,9 @@ const UserSignIn = () => {
         <button className='button' type="submit">Sign In</button>
         <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
       </form>
-      <p>Don't have a user account? Click here to <Link to="/signup">sign up</Link>!</p>
+      <p>Don't have a user account? Click here to
+        <Link to="/signup">sign up</Link>!
+      </p>
     </div>
   );
 }
