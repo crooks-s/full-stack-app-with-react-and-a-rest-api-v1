@@ -35,12 +35,6 @@ const UserSignIn = () => {
     }
   };
 
-  // For Cancel button
-  const handleCancel = (e) => {
-    e.preventDefault();
-    navigate('/');
-  };
-
   return (
     <div className="form--centered">
       <ErrorsDisplay errors={errors} />
