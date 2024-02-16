@@ -100,17 +100,22 @@ router.put('/courses/:id', authenticateUser, [
       let course;
       try {
         course = await Course.findByPk(req.params.id);
-        if (course) {
+        const courseOwner = await User.findByPk(course.userId);
+        // Validate if the current user owns the course to be deleted
+        const isCourseOwner = (
+          courseOwner.emailAddress === req.currentUser.emailAddress
+          && courseOwner.password === req.currentUser.password
+        );
+        if (!isCourseOwner) {
+          res.status(401).json({ message: 'You are not the owner of the course. Unauthorized to update the course.' });
+        } else if (course && isCourseOwner) {
           // update course instance with req.body
           await course.set(req.body);
-
           const user = await User.findByPk(req.body.userId);
-
           // check if user exists before Course can be saved
           if (!user) {
             res.status(404).json({ message: 'User not found' });
           }
-
           await course.save();
           res.status(204).location(`/courses/${course.id}`).end();
         } else {
@@ -143,7 +148,7 @@ router.delete('/courses/:id', authenticateUser, asyncHandler(async (req, res) =>
     await course.destroy();
     res.status(204).end();
   } else if (!isCourseOwner) {
-    res.status(401).json({ message: 'You are not the owner of the course. Unauthorized to remove course.'});
+    res.status(401).json({ message: 'You are not the owner of the course. Unauthorized to remove course.' });
   } else {
     res.status(404).json({ message: 'Course not found' });
   }
