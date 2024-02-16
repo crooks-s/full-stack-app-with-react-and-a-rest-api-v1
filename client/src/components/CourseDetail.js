@@ -18,7 +18,7 @@ const CourseDetail = () => {
   const { id } = useParams(); // courseId
   const navigate = useNavigate();
 
-  // Retrieve course details for single course at id
+  // Retrieve course details for a single course
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -21,7 +21,7 @@ const UpdateCourse = () => {
   const estimatedTime = useRef(null);
   const materialsNeeded = useRef(null);
 
-  // Retrieve course details to update a single course
+  // Retrieve course details for a single course
   useEffect(() => {
     const fetchData = async () => {
       try {
