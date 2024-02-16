@@ -71,7 +71,11 @@ const CourseDetail = () => {
           </Link>
         </div>
       ) : (
-        null
+        <div className='actions--bar'>
+          <Link to='/' className="button button-secondary">
+            Return to List
+          </Link>
+        </div>
       )}
       <div className="wrap">
         <ErrorsDisplay errors={errors} />
