@@ -57,8 +57,10 @@ const CourseDetail = () => {
 
   return (
     <>
-      {/* Validate if user is logged in to display UPDATE and DELETE course buttons */}
-      {authUser ? (
+      {/* Validate if user is logged in and is the course owner */}
+      {(course.User
+        && authUser.user.emailAddress === course.User.emailAddress
+      ) ? (
         <div className="actions--bar">
           <Link to={`update`} className="button">
             Update Course
