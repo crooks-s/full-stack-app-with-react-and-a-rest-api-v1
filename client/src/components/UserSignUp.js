@@ -1,43 +1,38 @@
+// Modules
 import { useState, useRef, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+// Context
 import UserContext from "../context/UserContext";
-
-
-/*
-Renders the "SIGN UP" screen -- 
-  1. render a FORM that allows user to sign up for new acct
-  2. render sign up button -- sends POST req to '/api/users'
-  3. render cancel button that returns user to default route
-*/
+// Component
+import ErrorsDisplay from './ErrorsDisplay';
 
 const UserSignUp = () => {
+  // React Hooks
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
+  const { actions } = useContext(UserContext);
+  // React Refs
   const firstName = useRef(null);
   const lastName = useRef(null);
   const emailAddress = useRef(null);
   const password = useRef(null);
-  const { actions } = useContext(UserContext);
 
-  // handle submit
+  // Create a new User
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const newUser = {
       firstName: firstName.current.value,
       lastName: lastName.current.value,
       emailAddress: emailAddress.current.value,
       password: password.current.value
-    }
-
+    };
     const fetchOptions = {
       method: 'POST',
       body: JSON.stringify(newUser),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
       }
-    }
-
+    };
     try {
       const response = await fetch(
         'http://localhost:5000/api/users',
@@ -49,23 +44,21 @@ const UserSignUp = () => {
       } else if (response.status === 400) {
         const data = await response.json();
         setErrors(data.errors);
-        console.log(errors);
-        //will use errors to render validation to DOM
       }
     } catch (error) {
       console.log('Error: ', error.message);
     }
-  }
+  };
 
-
-  // cancel 
+  // For Cancel button 
   const handleCancel = (e) => {
     e.preventDefault();
     navigate('/');
-  }
+  };
 
   return (
     <div className="form--center">
+      <ErrorsDisplay errors={errors.map(error => error.msg || error)} />
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="firstName">First Name</label>
