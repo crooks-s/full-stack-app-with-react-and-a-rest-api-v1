@@ -2,11 +2,11 @@
 import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from '../utils/apiHelper';
-import CancelButton from "./CancelButton";
 // Context
 import UserContext from "../context/UserContext";
 // Component
 import ErrorsDisplay from "./ErrorsDisplay";
+import CancelButton from "./CancelButton";
 
 const CreateCourse = () => {
   // React Hooks
