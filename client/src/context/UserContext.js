@@ -21,6 +21,7 @@ export const UserProvider = (props) => {
       const response = await fetch('http://localhost:5000/api/users', fetchOptions);
       if (response.status === 200) {
         const user = await response.json();
+        // Store the decoded password to Cookies. NOT RECOMMENDED! Will need to code in something better
         user.user.password = credentials.password;
         setAuthUser(user);
         Cookies.set("authenticatedUser", JSON.stringify(user), {expires: 1});
