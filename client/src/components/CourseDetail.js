@@ -2,6 +2,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Markdown from 'react-markdown';
+import { api } from '../utils/apiHelper';
 
 // Context
 import UserContext from "../context/UserContext";
@@ -19,16 +20,9 @@ const CourseDetail = () => {
 
   // Retrieve course details for single course at id
   useEffect(() => {
-    const fetchOptions = {
-      method: 'GET',
-      headers: {}
-    }
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5000/api/courses/${id}`,
-          fetchOptions
-        );
+        const response = await api(`/courses/${id}`, 'GET', null, null);
         if (response.status === 200) {
           const data = await response.json();
           setCourse(data);
