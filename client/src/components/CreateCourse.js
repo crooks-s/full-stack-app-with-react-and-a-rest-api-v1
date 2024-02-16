@@ -2,10 +2,8 @@
 import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from '../utils/apiHelper';
-
 // Context
 import UserContext from "../context/UserContext";
-
 // Component
 import ErrorsDisplay from "./ErrorsDisplay";
 

@@ -14,7 +14,6 @@ const UpdateCourse = () => {
   const navigate = useNavigate();
   const { authUser } = useContext(UserContext);
   const { id } = useParams();
-
   // React Refs
   const title = useRef(null);
   const description = useRef(null);

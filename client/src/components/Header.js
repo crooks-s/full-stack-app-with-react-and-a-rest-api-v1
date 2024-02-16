@@ -1,7 +1,6 @@
 // Modules
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-
 // Context
 import UserContext from '../context/UserContext';
 

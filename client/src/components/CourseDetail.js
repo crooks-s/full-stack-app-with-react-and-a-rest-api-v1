@@ -3,10 +3,8 @@ import { useEffect, useState, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Markdown from 'react-markdown';
 import { api } from '../utils/apiHelper';
-
 // Context
 import UserContext from "../context/UserContext";
-
 // Component
 import ErrorsDisplay from "./ErrorsDisplay";
 

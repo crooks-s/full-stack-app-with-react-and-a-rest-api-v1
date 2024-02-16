@@ -35,13 +35,12 @@ export const UserProvider = (props) => {
     } catch (error) {
       console.log('Error: ', error.message);
     }
-
   }
 
   const signOut = () => {
     setAuthUser(null);
     Cookies.remove("authenticatedUser");
-  }
+  };
 
   return (
     <UserContext.Provider value={{
@@ -54,6 +53,6 @@ export const UserProvider = (props) => {
       {props.children}
     </UserContext.Provider>
   );
-}
+};
 
 export default UserContext;
