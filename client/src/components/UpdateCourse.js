@@ -1,6 +1,6 @@
 // Modules
 import { useState, useRef, useEffect, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { api } from "../utils/apiHelper";
 // Context
 import UserContext from "../context/UserContext";
@@ -28,7 +28,11 @@ const UpdateCourse = () => {
         const response = await api(`/courses/${id}`, "GET", null, null);
         if (response.status === 200) {
           const data = await response.json();
-          setCourse(data);
+          if (authUser.user.emailAddress !== data.User.emailAddress) {
+            setErrors(['Unable to update. You are not the course owner.']);
+          } else {
+            setCourse(data);
+          }
         } else if (response.status === 404) {
           navigate('/notfound');
         }
@@ -37,7 +41,7 @@ const UpdateCourse = () => {
       }
     };
     fetchData();
-  }, [id, navigate]);
+  }, [id, navigate, authUser.user.emailAddress]);
 
   // Handles form submission to Update Course
   const handleSubmit = async (event) => {
@@ -79,55 +83,66 @@ const UpdateCourse = () => {
 
   return (
     <>
-      <div className="wrap">
-        <ErrorsDisplay errors={errors.map(error => error.msg || error)} />
-        <h2>Update Course</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="main--flex">
-            <div>
-              <label htmlFor="courseTitle">Course Title</label>
-              <input
-                id="courseTitle"
-                name="courseTitle"
-                type="text"
-                ref={title}
-                defaultValue={course.title}
-              />
-              <p>
-                By {course.User && `${course.User.firstName} ${course.User.lastName}`}
-              </p>
-              <label htmlFor="courseDescription">Course Description</label>
-              <textarea
-                id="courseDescription"
-                name="courseDescription"
-                ref={description}
-                defaultValue={course.description}
-                style={{ resize: 'none' }}
-              />
+      {errors.length ? (
+        <>
+        <div className="actions--bar">
+          <Link to='/' className="button button-secondary">
+            Return to List
+          </Link>
+        </div>
+          <ErrorsDisplay errors={errors.map(error => error.msg || error)} />
+        </>
+      ) : (
+        <div className="wrap">
+          <h2>Update Course</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="main--flex">
+              <div>
+                <label htmlFor="courseTitle">Course Title</label>
+                <input
+                  id="courseTitle"
+                  name="courseTitle"
+                  type="text"
+                  ref={title}
+                  defaultValue={course.title}
+                />
+                <p>
+                  By {course.User && `${course.User.firstName} ${course.User.lastName}`}
+                </p>
+                <label htmlFor="courseDescription">Course Description</label>
+                <textarea
+                  id="courseDescription"
+                  name="courseDescription"
+                  ref={description}
+                  defaultValue={course.description}
+                  style={{ resize: 'none' }}
+                />
+              </div>
+              <div>
+                <label htmlFor="estimatedTime">Estimated Time</label>
+                <input
+                  id="estimatedTime"
+                  name="estimatedTime"
+                  type="text"
+                  ref={estimatedTime}
+                  defaultValue={course.estimatedTime}
+                />
+                <label htmlFor="materialsNeeded">Materials Needed</label>
+                <textarea
+                  id="materialsNeeded"
+                  name="materialsNeeded"
+                  ref={materialsNeeded}
+                  defaultValue={course.materialsNeeded}
+                  style={{ resize: 'none' }}
+                />
+              </div>
             </div>
-            <div>
-              <label htmlFor="estimatedTime">Estimated Time</label>
-              <input
-                id="estimatedTime"
-                name="estimatedTime"
-                type="text"
-                ref={estimatedTime}
-                defaultValue={course.estimatedTime}
-              />
-              <label htmlFor="materialsNeeded">Materials Needed</label>
-              <textarea
-                id="materialsNeeded"
-                name="materialsNeeded"
-                ref={materialsNeeded}
-                defaultValue={course.materialsNeeded}
-                style={{ resize: 'none' }}
-              />
-            </div>
-          </div>
-          <button className="button" type="submit">Update Button</button>
-          <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
-        </form>
-      </div>
+            <button className="button" type="submit">Update Button</button>
+            <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+          </form>
+        </div>
+      )}
+
     </>
   );
 }
