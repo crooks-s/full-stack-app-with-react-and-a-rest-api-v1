@@ -17,7 +17,7 @@ export const api = (
 
   if (credentials) {
     const encodedCreds = btoa(
-      `${credentials.emailAddress}:${credentials.password}`
+      `${credentials.username}:${credentials.password}`
     );
     options.headers.Authorization = `Basic ${encodedCreds}`;
   }
