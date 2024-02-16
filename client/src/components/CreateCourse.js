@@ -2,6 +2,7 @@
 import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from '../utils/apiHelper';
+import CancelButton from "./CancelButton";
 // Context
 import UserContext from "../context/UserContext";
 // Component
@@ -49,11 +50,6 @@ const CreateCourse = () => {
     };
   };
 
-  const handleCancel = (e) => {
-    e.preventDefault();
-    navigate('/');
-  }
-
   return (
     <div className="wrap">
       <ErrorsDisplay errors={errors.map(error => error.msg)} />
@@ -96,7 +92,7 @@ const CreateCourse = () => {
           </div>
         </div>
         <button className="button" type="submit">Create Course</button>
-        <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+        <CancelButton />
       </form>
     </div>
   );
