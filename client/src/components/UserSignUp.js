@@ -53,7 +53,7 @@ const UserSignUp = () => {
         //will use errors to render validation to DOM
       }
     } catch (error) {
-      console.log(error);
+      console.log('Error: ', error.message);
     }
   }
 

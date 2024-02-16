@@ -1,35 +1,33 @@
-import { useContext, useRef, useState } from "react";
+// Modules
+import { useContext, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+// Context
 import UserContext from "../context/UserContext";
 
 const UserSignIn = () => {
+  // React Hooks
   const navigate = useNavigate();
   const { actions } = useContext(UserContext);
-
+  // React Refs
   const emailAddress = useRef(null);
   const password = useRef(null);
 
-  const handleSubmit = async(event) => {
+  // Create new user and sign in
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
     const credentials = {
       emailAddress: emailAddress.current.value,
       password: password.current.value
     };
-
-    try { 
+    try {
       const user = await actions.signIn(credentials);
+      navigate('/');
       if (user) {
-        console.log("You're logged in.");
-        navigate('/'); // will need to show user is logged in
-      } else {
-        console.log('sign in unsuccessful');
       }
-    } catch(error) {
-      console.log(error);
+    } catch (error) {
+      console.log('Error: ', error.message);
     }
-  }
+  };
 
   const handleCancel = (e) => {
     e.preventDefault();
@@ -41,7 +39,7 @@ const UserSignIn = () => {
       <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="emailAddress">Email Address</label>
-        <input 
+        <input
           id="emailAddress"
           name="emailAddress"
           type="email"
@@ -49,12 +47,12 @@ const UserSignIn = () => {
           placeholder="email@example.com"
         />
         <label htmlFor="password">Password</label>
-        <input 
-        id="password"
-        name="password"
-        type="password"
-        ref={password}
-        placeholder="8-20 characters"
+        <input
+          id="password"
+          name="password"
+          type="password"
+          ref={password}
+          placeholder="8-20 characters"
         />
         <button className='button' type="submit">Sign In</button>
         <button className="button button-secondary" onClick={handleCancel}>Cancel</button>

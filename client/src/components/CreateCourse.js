@@ -54,7 +54,7 @@ const CreateCourse = () => {
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log('Error: ', error.message);
     };
   };
 
