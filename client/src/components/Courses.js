@@ -1,5 +1,7 @@
+// Modules
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { api } from '../utils/apiHelper';
 
 const Courses = () => {
   // React Hook
@@ -7,13 +9,9 @@ const Courses = () => {
 
   // Retrieve all courses to display on first render
   useEffect(() => {
-    const fetchOptions = {
-      method: 'GET',
-      headers: {}
-    };
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/courses', fetchOptions);
+        const response = await api('/courses', "GET", null, null);
         if (response.status === 200) {
           const data = await response.json();
           setCourses(data);
