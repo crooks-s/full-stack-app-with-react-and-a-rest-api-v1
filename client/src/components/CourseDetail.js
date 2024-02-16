@@ -36,20 +36,12 @@ const CourseDetail = () => {
 
   // DELETE Course
   const handleDeleteCourse = async () => {
-    const encodedCredentials = btoa(
-      `${authUser.user.emailAddress}:${authUser.user.password}`
-    );
-    const fetchOptions = {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Basic ${encodedCredentials}`
-      }
+    const credentials = {
+      username: authUser.user.emailAddress,
+      password: authUser.user.password
     };
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/courses/${id}`,
-        fetchOptions
-      );
+      const response = await api(`/courses/${id}`, "DELETE", null, credentials);
       if (response.status === 204) {
         navigate('/');
       } else if (response.status === 401) {
