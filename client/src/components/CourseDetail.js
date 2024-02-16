@@ -26,13 +26,15 @@ const CourseDetail = () => {
         if (response.status === 200) {
           const data = await response.json();
           setCourse(data);
+        } else if (response.status === 404) {
+          navigate('/notfound');
         }
       } catch (error) {
         console.log('Error: ', error.message);
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, navigate]);
 
   // DELETE Course
   const handleDeleteCourse = async () => {
