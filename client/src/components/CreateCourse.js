@@ -1,6 +1,7 @@
 // Modules
 import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from '../utils/apiHelper';
 
 // Context
 import UserContext from "../context/UserContext";
@@ -29,21 +30,13 @@ const CreateCourse = () => {
       materialsNeeded: materialsNeeded.current.value,
       userId: authUser.user.id
     };
-    const encodedCredentials = btoa(`${authUser.user.emailAddress}:${authUser.user.password}`);
-    const fetchOptions = {
-      method: 'POST',
-      body: JSON.stringify(newCourse),
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Basic ${encodedCredentials}`
-      }
+    const credentials = {
+      username: authUser.user.emailAddress,
+      password: authUser.user.password
     };
     try {
       if (authUser) {
-        const response = await fetch(
-          'http://localhost:5000/api/courses',
-          fetchOptions
-        );
+        const response = await api('/courses', "POST", newCourse, credentials);
         if (response.status === 201) {
           navigate('/');
         } else if (response.status === 400) {
