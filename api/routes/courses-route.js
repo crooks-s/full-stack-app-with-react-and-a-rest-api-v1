@@ -46,10 +46,10 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
 router.post('/courses', authenticateUser, [
   check('title')
     .notEmpty()
-    .withMessage('Please enter a valid course title.'),
+    .withMessage('Please enter a valid "Course Title".'),
   check('description')
     .notEmpty()
-    .withMessage('Please enter a valid course description.'),
+    .withMessage('Please enter a valid "Course Description".'),
 ],
   asyncHandler(async (req, res) => {
     // errors are sent to result if checks are invalid
@@ -86,10 +86,10 @@ router.post('/courses', authenticateUser, [
 router.put('/courses/:id', authenticateUser, [
   check('title')
     .notEmpty()
-    .withMessage('Please enter a valid course title.'),
+    .withMessage('Please enter a valid "Course Title".'),
   check('description')
     .notEmpty()
-    .withMessage('Please enter a valid course description.'),
+    .withMessage('Please enter a valid "Course Description".'),
 ],
   asyncHandler(async (req, res) => {
     // errors will be sent to result if checks are invalid
