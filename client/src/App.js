@@ -1,20 +1,19 @@
+// Module
 import { Route, Routes } from 'react-router-dom';
-
 // Components
 import CourseDetail from './components/CourseDetail';
 import Courses from './components/Courses';
 import CreateCourse from './components/CreateCourse';
 import Header from './components/Header';
-// import Home from './components/Home';
 import NotFound from './components/NotFound';
 import PrivateRoute from './components/PrivateRoute';
 import UpdateCourse from './components/UpdateCourse';
 import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
 import UserSignUp from './components/UserSignUp';
+// import Home from './components/Home'; -- to be used after project submissiona
 
 function App() {
-
   return (
     <div>
       <Header />
