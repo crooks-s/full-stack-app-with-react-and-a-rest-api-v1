@@ -1,6 +1,7 @@
 // Modules
 import { useState, useRef, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { api } from "../utils/apiHelper";
 // Context
 import UserContext from "../context/UserContext";
 // Component
@@ -22,13 +23,9 @@ const UpdateCourse = () => {
 
   // Retrieve course details to update a single course
   useEffect(() => {
-    const fetchOptions = {
-      method: 'GET',
-      headers: {}
-    };
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/courses/${id}`, fetchOptions);
+        const response = await api(`/courses/${id}`, "GET", null, null);
         if (response.status === 200) {
           const data = await response.json();
           setCourse(data);
@@ -40,7 +37,7 @@ const UpdateCourse = () => {
     fetchData();
   }, [id]);
 
-  // Update Course
+  // Handles form submission to Update Course
   const handleSubmit = async (event) => {
     event.preventDefault();
     const updatedCourse = {
@@ -50,22 +47,12 @@ const UpdateCourse = () => {
       materialsNeeded: materialsNeeded.current.value,
       userId: authUser.user.id
     };
-    const encodedCredentials = btoa(
-      `${authUser.user.emailAddress}:${authUser.user.password}`
-    );
-    const fetchOptions = {
-      method: 'PUT',
-      body: JSON.stringify(updatedCourse),
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Basic ${encodedCredentials}`
-      }
+    const credentials = {
+      username: authUser.user.emailAddress,
+      password: authUser.user.password
     };
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/courses/${id}`,
-        fetchOptions
-      );
+      const response = await api(`/courses/${id}`, "PUT", updatedCourse, credentials);
       if (response.status === 204) {
         navigate(`/courses/${id}`);
       } else if (response.status === 400) {
