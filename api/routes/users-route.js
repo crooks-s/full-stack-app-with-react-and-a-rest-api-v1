@@ -27,18 +27,22 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
 router.post('/users', [
   check('firstName')
     .isLength({ min: 2 })
+    .withMessage('First name must be at least 2 characters long.')
     .matches(nameRegex)
     .withMessage('First name is required. Please use only alphabetic characters and hyphens.'),
   check('lastName')
     .isLength({ min: 2 })
+    .withMessage('Last name must be at least 2 characters long.')
     .matches(nameRegex)
     .withMessage('Last name is required. Please use only alphabetic characters and hyphens.'),
   check('emailAddress')
+    .notEmpty()
+    .withMessage('Email address is required.')
     .isEmail()
     .withMessage('Invalid email format'),
   check('password')
     .isLength({ min: 8, max: 20 })
-    .withMessage('Must be 8-20 characters in length.')
+    .withMessage('Password must be 8-20 characters in length.')
 ],
   asyncHandler(async (req, res) => {
     // errors will be sent to result if checks are invalid
