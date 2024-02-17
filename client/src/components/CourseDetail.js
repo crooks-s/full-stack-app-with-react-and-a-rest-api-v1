@@ -56,22 +56,24 @@ const CourseDetail = () => {
   };
 
   return (
-    <>
+    <main>
       {/* Validate if user is logged in and is the course owner */}
       {(authUser
         && course.User
         && authUser.user.emailAddress === course.User.emailAddress
       ) ? (
         <div className="actions--bar">
-          <Link to='update' className="button">
-            Update Course
-          </Link>
-          <button className="button" onClick={handleDeleteCourse}>
-            Delete Course
-          </button>
-          <Link to='/' className="button button-secondary">
-            Return to List
-          </Link>
+          <div className="wrap">
+            <Link to='update' className="button">
+              Update Course
+            </Link>
+            <button className="button" onClick={handleDeleteCourse}>
+              Delete Course
+            </button>
+            <Link to='/' className="button button-secondary">
+              Return to List
+            </Link>
+          </div>
         </div>
       ) : (
         <div className='actions--bar'>
@@ -104,7 +106,7 @@ const CourseDetail = () => {
           </div>
         </form>
       </div>
-    </>
+    </main>
   );
 }
 
