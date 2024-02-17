@@ -63,7 +63,7 @@ const CourseDetail = () => {
         && authUser.user.emailAddress === course.User.emailAddress
       ) ? (
         <div className="actions--bar">
-          <Link to={`update`} className="button">
+          <Link to='update' className="button">
             Update Course
           </Link>
           <button className="button" onClick={handleDeleteCourse}>
