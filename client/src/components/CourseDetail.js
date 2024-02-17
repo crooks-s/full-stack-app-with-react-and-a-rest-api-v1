@@ -58,7 +58,8 @@ const CourseDetail = () => {
   return (
     <>
       {/* Validate if user is logged in and is the course owner */}
-      {(course.User
+      {(authUser
+        && course.User
         && authUser.user.emailAddress === course.User.emailAddress
       ) ? (
         <div className="actions--bar">
