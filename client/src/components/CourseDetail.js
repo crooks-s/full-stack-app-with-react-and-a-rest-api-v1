@@ -99,9 +99,15 @@ const CourseDetail = () => {
               <h3 className="course--detail--title">Estimated Time</h3>
               <p>{course.estimatedTime}</p>
               <h3 className="course--detail--title">Materials Needed</h3>
-              <ul className="course--detail--list">
-                <Markdown>{course.materialsNeeded}</Markdown>
-              </ul>
+              <Markdown
+                components={{
+                  ul: ({ ...props }) => (
+                    <ul style={{ textAlign: 'left' }} {...props} />
+                  ),
+                }}
+              >
+                {course.materialsNeeded}
+              </Markdown>
             </div>
           </div>
         </form>
