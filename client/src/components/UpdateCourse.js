@@ -77,7 +77,7 @@ const UpdateCourse = () => {
 
   return (
     <>
-      <ErrorsDisplay errors={errors} />
+      <ErrorsDisplay errors={errors.map((error => error.msg || error))} />
       <div className="wrap">
         <h2>Update Course</h2>
         <form onSubmit={handleSubmit}>
