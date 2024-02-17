@@ -77,9 +77,11 @@ const CourseDetail = () => {
         </div>
       ) : (
         <div className='actions--bar'>
-          <Link to='/' className="button button-secondary">
-            Return to List
-          </Link>
+          <div className="wrap">
+            <Link to='/' className="button button-secondary">
+              Return to List
+            </Link>
+          </div>
         </div>
       )}
       <div className="wrap">
